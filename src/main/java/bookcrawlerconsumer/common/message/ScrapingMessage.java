@@ -1,9 +1,13 @@
 package bookcrawlerconsumer.common.message;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +25,5 @@ public class ScrapingMessage implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private SiteType type;
+	
 }
