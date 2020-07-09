@@ -1,26 +1,41 @@
-package bookcrawlerconsumer.crawler;
+package bookcrawlerconsumer.domain;
 
 
 import java.io.IOException;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import bookcrawlerconsumer.common.message.SiteType;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@EqualsAndHashCode(of = "id")
+@Entity @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Getter
+@Getter 
 public class Scraping {
 
+	@Id @GeneratedValue
+	private Long id;
+	
 	private String domain;
+	
+	private String link;
 
 	@Enumerated(EnumType.STRING)
 	private SiteType type;
@@ -39,12 +54,13 @@ public class Scraping {
 	private String regex = "\\D+";
 	
 
-	public void init(String domain, SiteType type) {
+	public void init(String domain, SiteType type , String link) {
 		this.domain = domain;
 		this.type = type;
+		this.link = link;
 	}
 
-	public void parseStart(String link) throws IOException {
+	public void parseStart() throws IOException {
 
 		if (this.type == null) {
 			log.info("type이 null 입니다.");
